@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import MdxArticle from "@/components/MdxArticle";
-import { getAll, getBySlug } from "@/lib/content";
+import { getBySlug, getStaticSlugParams } from "@/lib/content";
 
 export const ensureStatic = "navigation";
 
 export function generateStaticParams() {
-  return getAll("blog").map(({ slug }) => ({ slug }));
+  return getStaticSlugParams("blog");
 }
 
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {

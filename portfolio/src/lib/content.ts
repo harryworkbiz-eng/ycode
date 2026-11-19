@@ -52,6 +52,14 @@ export function getBySlug(type: ContentType, slug: string): ContentItem | undefi
   return readAll(type).find((item) => item.slug === slug);
 }
 
+// Cache Components rejects an empty generateStaticParams; the placeholder 404s via notFound()
+const PLACEHOLDER_SLUG = "__placeholder__";
+
+export function getStaticSlugParams(type: ContentType): { slug: string }[] {
+  const slugs = getAll(type).map(({ slug }) => ({ slug }));
+  return slugs.length > 0 ? slugs : [{ slug: PLACEHOLDER_SLUG }];
+}
+
 export const getPosts = () => getAll("blog");
 export const getPost = (slug: string) => getBySlug("blog", slug);
 export const getProjects = () => getAll("projects");

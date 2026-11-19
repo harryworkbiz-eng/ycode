@@ -1,0 +1,16 @@
+---
+title: Putting Three.js in the hero
+date: 2026-11-15
+description: Lazy-loading a react-three-fiber scene without blocking first paint.
+slug: three-js-in-the-hero
+tags: [threejs, performance]
+---
+
+The homepage hero renders a small **react-three-fiber** scene. WebGL bundles are heavy,
+so the scene is loaded with `next/dynamic` and `ssr: false`.
+
+```tsx
+const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false });
+```
+
+The rest of the page renders immediately; the canvas fades in once the bundle arrives.
